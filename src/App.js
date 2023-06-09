@@ -1,5 +1,7 @@
 import { useCallback, useMemo, useState } from "react";
 
+import Button from "./components/Button";
+import ButtonGroup from "./components/ButtonGroup";
 import CheckboxGroup from "./components/CheckboxGroup";
 import Form from "./components/Form";
 
@@ -15,6 +17,9 @@ function App() {
       { label: "ddd", value: "ddd" },
       { label: "eee", value: "eee" },
       { label: "fff", value: "fff" },
+      { label: "ggg", value: "ggg" },
+      { label: "hhh", value: "hhh" },
+      { label: "iii", value: "iii" },
     ],
     []
   );
@@ -43,11 +48,16 @@ function App() {
       <CheckboxGroup
         selectedItems={selectedItems}
         options={options}
-        columns={2}
+        columns={3}
         defaultSelected={selectedItems}
         onSelect={handleCheckboxChange}
         onSelectAll={handleSelectAll}
       />
+      <ButtonGroup>
+        <Button title="-" />
+        <Button title="count" />
+        <Button title="+" />
+      </ButtonGroup>
     </Form>
   );
 }
