@@ -3,7 +3,7 @@ import { useCallback, useMemo } from "react";
 import Checkbox from "../Checkbox";
 import Label from "../Label";
 
-const CheckboxGroup = ({ selectedItems, options, columns, defaultSelected, onSelect, onSelectAll }) => {
+const CheckboxGroup = ({ selectedItems, options, columns, onSelect, onSelectAll }) => {
   // TODO: Need to sort the array with col direction
   const sortArrayWithRowDirection = useCallback(
     (emptyArray) => {

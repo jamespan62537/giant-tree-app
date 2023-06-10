@@ -7,6 +7,7 @@ import Form from "./components/Form";
 
 function App() {
   const [selectedItems, setSelectedItems] = useState([]);
+  const [columns, setColumns] = useState(1);
 
   const options = useMemo(
     () => [
@@ -43,22 +44,33 @@ function App() {
     }
   }, [options, selectedItems.length]);
 
+  const handleMinusColumns = useCallback(() => {
+    if (columns === 1) return;
+    setColumns((previousColumns) => previousColumns - 1);
+  }, [columns]);
+
+  const handlePlusColumns = useCallback(() => {
+    if (columns === options.length) return;
+    setColumns((previousColumns) => previousColumns + 1);
+  }, [columns, options]);
+
   return (
-    <Form>
-      <CheckboxGroup
-        selectedItems={selectedItems}
-        options={options}
-        columns={3}
-        defaultSelected={selectedItems}
-        onSelect={handleCheckboxChange}
-        onSelectAll={handleSelectAll}
-      />
-      <ButtonGroup>
-        <Button title="-" />
-        <Button title="count" />
-        <Button title="+" />
+    <div className="flex flex-col items-center">
+      <Form>
+        <CheckboxGroup
+          selectedItems={selectedItems}
+          options={options}
+          columns={columns}
+          onSelect={handleCheckboxChange}
+          onSelectAll={handleSelectAll}
+        />
+      </Form>
+      <ButtonGroup prefix="columns">
+        <Button title="-" onClick={handleMinusColumns} />
+        <Button title={columns} />
+        <Button title="+" onClick={() => handlePlusColumns()} />
       </ButtonGroup>
-    </Form>
+    </div>
   );
 }
 

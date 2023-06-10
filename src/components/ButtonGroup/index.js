@@ -7,13 +7,17 @@ const direction = {
 const { ROW } = direction;
 
 const ButtonGroupRowStyle = {
-  [ROW]: "flex",
+  [ROW]: "flex items-center",
 };
 
-const ButtonGroup = ({ direction = ROW, children }) => {
+const ButtonGroup = ({ prefix, direction = ROW, children }) => {
   const directionStyle = ButtonGroupRowStyle[direction];
 
-  return <div className={cx(directionStyle)}>{children}</div>;
+  return (
+    <div className={cx(directionStyle)}>
+      {prefix}: {children}
+    </div>
+  );
 };
 
 ButtonGroup.ButtonGroupRowStyle = ButtonGroupRowStyle;
