@@ -7,7 +7,7 @@ import Form from "./components/Form";
 
 function App() {
   const [selectedItems, setSelectedItems] = useState([]);
-  const [columns, setColumns] = useState(1);
+  const [columns, setColumns] = useState(2);
 
   const options = useMemo(
     () => [

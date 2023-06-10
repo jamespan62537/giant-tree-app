@@ -4,35 +4,47 @@ import Checkbox from "../Checkbox";
 import Label from "../Label";
 
 const CheckboxGroup = ({ selectedItems, options, columns, onSelect, onSelectAll }) => {
-  // TODO: Need to sort the array with col direction
   const sortArrayWithRowDirection = useCallback(
-    (emptyArray) => {
-      let rowsPointer = 0;
-      let columnsPointer = 0;
+    (emptyArray, rows) => {
+      let extraColumn = options.length % columns;
+      // control the current column position in a row
+      let columnPointer = 0;
+      // control the current row position
+      let rowPointer = 0;
+      // track current option
       let optionsPointer = 0;
+      // record rows count in each loop
+      let totalRows = rows;
 
       while (optionsPointer < options.length) {
-        columnsPointer = 0;
-        while (columnsPointer < columns) {
-          emptyArray[rowsPointer][columnsPointer] = options[optionsPointer];
-          columnsPointer++;
+        // initial rowPointer in each loop
+        rowPointer = 0;
+        while (rowPointer < totalRows) {
+          emptyArray[rowPointer][columnPointer] = options[optionsPointer];
           optionsPointer++;
+          rowPointer++;
         }
-        rowsPointer++;
+        if (extraColumn > 0) {
+          extraColumn--;
+          totalRows = extraColumn === 0 ? rows - 1 : rows;
+        }
+        columnPointer++;
       }
-
       return emptyArray;
     },
     [columns, options]
   );
 
   const sortedOptions = useMemo(() => {
-    // first: calculate how many rows we need
-    // second: use while loop to put option in options into the result array
+    // calculate how many rows we need
     const rows = Math.ceil(options.length / columns);
+
+    // create emptyArray
     const emptyArray = Array.from({ length: rows }, () => Array.from({ length: columns }));
-    const arrayWithColumn = sortArrayWithRowDirection(emptyArray);
-    return arrayWithColumn;
+
+    const resultOptions = sortArrayWithRowDirection(emptyArray, rows);
+
+    return resultOptions;
   }, [columns, options, sortArrayWithRowDirection]);
 
   const handleCheckboxChange = useCallback(
