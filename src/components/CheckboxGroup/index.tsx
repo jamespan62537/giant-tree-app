@@ -9,6 +9,7 @@ type OptionType = {
 }
 
 type CheckboxGroupProps = {
+  isSelectAll: boolean,
   selectedItems: string[],
   options: OptionType[],
   columns: number,
@@ -16,7 +17,7 @@ type CheckboxGroupProps = {
   onSelectAll: () => void,
 }
 
-const CheckboxGroup = ({ selectedItems, options, columns, onSelect, onSelectAll }: CheckboxGroupProps) => {
+const CheckboxGroup = ({ isSelectAll, selectedItems, options, columns, onSelect, onSelectAll }: CheckboxGroupProps) => {
   const sortArrayWithRowDirection = useCallback(
     (emptyArray: OptionType[][], rows: number) => {
       let extraColumn = options.length % columns;
@@ -78,7 +79,7 @@ const CheckboxGroup = ({ selectedItems, options, columns, onSelect, onSelectAll 
           {option.map((item, columnIndex) => (
             <div className="flex w-1/2" key={`column-${columnIndex}`}>
               {item?.value && <Label>
-                <Checkbox checked={selectedItems.includes(item.value)} onChange={() => handleCheckboxChange(item.value)} />
+                <Checkbox checked={rowIndex === 0 && columnIndex === 0 ? isSelectAll : selectedItems.includes(item.value)} onChange={() => handleCheckboxChange(item.value)} />
                 {item.label}
               </Label>}
             </div>
