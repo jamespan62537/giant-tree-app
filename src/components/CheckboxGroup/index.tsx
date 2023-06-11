@@ -3,9 +3,22 @@ import { useCallback, useMemo } from "react";
 import Checkbox from "../Checkbox";
 import Label from "../Label";
 
-const CheckboxGroup = ({ selectedItems, options, columns, onSelect, onSelectAll }) => {
+type OptionType = {
+  label: string,
+  value: string
+}
+
+type CheckboxGroupProps = {
+  selectedItems: string[],
+  options: OptionType[],
+  columns: number,
+  onSelect: (event: string) => void,
+  onSelectAll: () => void,
+}
+
+const CheckboxGroup = ({ selectedItems, options, columns, onSelect, onSelectAll }: CheckboxGroupProps) => {
   const sortArrayWithRowDirection = useCallback(
-    (emptyArray, rows) => {
+    (emptyArray: OptionType[][], rows: number) => {
       let extraColumn = options.length % columns;
       // control the current column position in a row
       let columnPointer = 0;
@@ -40,7 +53,7 @@ const CheckboxGroup = ({ selectedItems, options, columns, onSelect, onSelectAll 
     const rows = Math.ceil(options.length / columns);
 
     // create emptyArray
-    const emptyArray = Array.from({ length: rows }, () => Array.from({ length: columns }));
+    const emptyArray: OptionType[][] = Array.from({ length: rows }, () => Array.from({ length: columns }));
 
     const resultOptions = sortArrayWithRowDirection(emptyArray, rows);
 
@@ -48,7 +61,7 @@ const CheckboxGroup = ({ selectedItems, options, columns, onSelect, onSelectAll 
   }, [columns, options, sortArrayWithRowDirection]);
 
   const handleCheckboxChange = useCallback(
-    (value) => {
+    (value: string) => {
       if (value === "select all") {
         onSelectAll();
       } else {
@@ -64,12 +77,10 @@ const CheckboxGroup = ({ selectedItems, options, columns, onSelect, onSelectAll 
         <div className="flex" key={`row-${rowIndex}`}>
           {option.map((item, columnIndex) => (
             <div className="flex w-1/2" key={`column-${columnIndex}`}>
-              {item?.label && (
-                <Label>
-                  <Checkbox checked={selectedItems.includes(item.value)} onChange={() => handleCheckboxChange(item.value)} />
-                  {item?.label}
-                </Label>
-              )}
+              {item?.value && <Label>
+                <Checkbox checked={selectedItems.includes(item.value)} onChange={() => handleCheckboxChange(item.value)} />
+                {item.label}
+              </Label>}
             </div>
           ))}
         </div>

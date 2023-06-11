@@ -1,25 +1,25 @@
 import React, { useMemo } from "react";
 import cx from "classnames";
 
-enum Type {
+enum TypeEnum {
   CONTAINED = 'contained',
 };
 
-enum Size {
+enum SizeEnum {
   NORMAL = 'normal'
 }
 
-const { CONTAINED } = Type;
-const { NORMAL } = Size
+const { CONTAINED } = TypeEnum;
+const { NORMAL } = SizeEnum
 
 type ButtonProps = {
-  type?: Type,
-  size?: Size,
+  type?: TypeEnum,
+  size?: SizeEnum,
   title?: string | number,
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
 }
 
-const Button = ({ type = CONTAINED, size = NORMAL, title, onClick }: ButtonProps) => {
+const Button = ({ type = CONTAINED, size = NORMAL, title = '', onClick }: ButtonProps) => {
   const ButtonTypeStyle = useMemo(() => {
     return {
       [CONTAINED]: "p-2 border-solid border-[1px]",
@@ -42,6 +42,6 @@ const Button = ({ type = CONTAINED, size = NORMAL, title, onClick }: ButtonProps
   );
 };
 
-Button.Size = Size;
-Button.Type = Type;
+Button.Size = SizeEnum;
+Button.Type = TypeEnum;
 export default Button;
