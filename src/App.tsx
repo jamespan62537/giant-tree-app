@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 
 import Button from "./components/Button";
 import ButtonGroup from "./components/ButtonGroup";
@@ -6,7 +6,7 @@ import CheckboxGroup from "./components/CheckboxGroup";
 import Form from "./components/Form";
 
 function App() {
-  const [selectedItems, setSelectedItems] = useState([]);
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [columns, setColumns] = useState(2);
 
   const options = useMemo(
@@ -26,7 +26,7 @@ function App() {
   );
 
   const handleCheckboxChange = useCallback(
-    (value) => {
+    (value: string) => {
       if (selectedItems.includes(value)) {
         setSelectedItems(selectedItems.filter((item) => item !== value));
       } else {
